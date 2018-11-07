@@ -2,6 +2,7 @@ package cn.web.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import cn.web.model.Product;
 
@@ -18,18 +19,15 @@ public class ProductDaoImpl extends BaseDao<Product> {
 	//product.setId(5);
 	//daoImpl.update(product);
     product = daoImpl.getById(4);
-	System.out.println(product.toString());
+    System.out.println(product.toString());
+ List<Product> proList = daoImpl.queryByName("one");
+ 		 for (Product temp : proList) {
+ 		 System.out.println(temp.toString());
+ 		 }
+	
 	//daoImpl.Delete(2);
 	 }
-	public Product getById(int id) {
-		
-		String sql = "select * from product where id = ?";
-		return super.getById(sql, id);
-	}
-	public Product queryByName(String name) {
-		Product product = new Product();
-		return product;
-	}
+	
 	
 	public int Delete(int id){
 		String sql = "delete from product where id = ?";
@@ -43,6 +41,16 @@ public class ProductDaoImpl extends BaseDao<Product> {
 	public int update(Product product) {
 		String sql="update product set name = ? ,price = ? ,remark = ? where id = ?";
 		return super.update(sql, new Object[] { product.getName(),product.getPrice(),product.getRemark(),product.getId()  });
+	}
+    public Product getById(int id) {
+		
+		String sql = "select * from product where id = ?";
+		List<Product> proList = super.queryByName(sql, id);
+	    return proList.size()>0?proList.get(0):null;
+    }
+	public List<Product> queryByName(String keyword) {
+		String sql = "select * from product where name like ?";
+		return super.queryByName(sql, "%" + keyword + "%" );
 	}
 	protected Product getRow(ResultSet rs) throws SQLException {
 		//子类 将父类的abstract进行个性化实现;

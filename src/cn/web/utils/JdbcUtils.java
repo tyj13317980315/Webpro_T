@@ -1,6 +1,7 @@
 package cn.web.utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.sql.Statement;
@@ -42,6 +43,34 @@ public class JdbcUtils {
 				throw new RuntimeException(e);
 			}
 		}
+	}
+	public static void close(Connection connection,Statement pre,ResultSet rs){
+		try {
+			if(rs !=null && !rs.isClosed()) {
+			rs.close();
+			System.out.println("rs已关闭");}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}finally {
+				
+			
+		try {
+			if(pre != null && !pre.isClosed()) {
+				pre.close();
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				if(connection != null && !connection.isClosed()) {
+				connection.close();	
+				System.out.println("connection已关闭");
+				}
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+		}
+			}
 	}
 	public static void main(String[] args){
 		
