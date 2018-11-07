@@ -1,19 +1,16 @@
 package cn.web.model;
 
-import java.sql.Date;
+import java.math.BigDecimal;
+import java.util.Date;
 
 public class Product {
 
 	
 
-		@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", remark=" + remark + ", date=" + date
-				+ "]";
-	}
+	
 		private Integer id;
 		private String name;
-		private Double price;
+		private BigDecimal price;
 		private String remark;
 		private Date date;
 		public Integer getId() {
@@ -28,10 +25,10 @@ public class Product {
 		public void setName(String name) {
 			this.name = name;
 		}
-		public Double getPrice() {
+		public BigDecimal getPrice() {
 			return price;
 		}
-		public void setPrice(Double price) {
+		public void setPrice(BigDecimal price) {
 			this.price = price;
 		}
 		public String getRemark() {
@@ -46,6 +43,12 @@ public class Product {
 		public void setDate(Date date) {
 			this.date = date;
 		}
+		@Override
+		public String toString() {
+			return "Product [id=" + id + ", name=" + name + ", price=" + price + ", remark=" + remark + ", date=" + date
+					+ "]";
+		}
+		
 		
 		
 }

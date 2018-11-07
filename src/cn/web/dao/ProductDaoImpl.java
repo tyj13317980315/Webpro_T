@@ -1,10 +1,9 @@
 package cn.web.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import cn.web.model.Product;
+
 
 public class ProductDaoImpl extends BaseDao<Product> {
 
@@ -12,18 +11,24 @@ public class ProductDaoImpl extends BaseDao<Product> {
 	 ProductDaoImpl daoImpl = new ProductDaoImpl();
 	
 	
-	Product product = new Product();
+	//Product product = new Product();
+	List<Product> products = null;
 	//product.setName("Iphone Xs max");
 	//product.setPrice(9499.00);
 	//product.setRemark("Xs Max比Xr贵啊");
 	//product.setId(5);
 	//daoImpl.update(product);
-    product = daoImpl.getById(4);
+	products =  daoImpl.queryByName("phone");
+	for(Product temp:products) {
+		System.out.println(temp.toString());
+	}
+    Product product = daoImpl.getById(4);
     System.out.println(product.toString());
- List<Product> proList = daoImpl.queryByName("one");
- 		 for (Product temp : proList) {
- 		 System.out.println(temp.toString());
- 		 }
+    
+/// List<Product> proList = daoImpl.queryByName("one");
+ 	//	 for (Product temp : proList) {
+ 		// System.out.println(temp.toString());
+ 		// }
 	
 	//daoImpl.Delete(2);
 	 }
@@ -45,14 +50,14 @@ public class ProductDaoImpl extends BaseDao<Product> {
     public Product getById(int id) {
 		
 		String sql = "select * from product where id = ?";
-		List<Product> proList = super.queryByName(sql, id);
+		List<Product> proList = super.queryByName(Product.class,sql, id);
 	    return proList.size()>0?proList.get(0):null;
     }
 	public List<Product> queryByName(String keyword) {
 		String sql = "select * from product where name like ?";
-		return super.queryByName(sql, "%" + keyword + "%" );
+		return super.queryByName(Product.class,sql, "%" + keyword + "%" );
 	}
-	protected Product getRow(ResultSet rs) throws SQLException {
+/*	protected Product getRow(ResultSet rs) throws SQLException {
 		//子类 将父类的abstract进行个性化实现;
 		Product product = new Product();
 		product.setName(rs.getString("name"));
@@ -60,6 +65,6 @@ public class ProductDaoImpl extends BaseDao<Product> {
         product.setPrice(rs.getDouble("price"));
 		product.setRemark(rs.getString("remark"));
 		return product;
-	}
+	}*/
 
 }

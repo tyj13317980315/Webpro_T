@@ -27,22 +27,7 @@ public class JdbcUtils {
 		
 	}
 	public static void close(Connection connection,Statement pre){
-		try {
-			if(pre != null && !pre.isClosed()) {
-				pre.close();
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
-			try {
-				if(connection != null && !connection.isClosed()) {
-				connection.close();	
-				System.out.println("connection已关闭");
-				}
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
-			}
-		}
+		close(connection, pre, null);
 	}
 	public static void close(Connection connection,Statement pre,ResultSet rs){
 		try {
