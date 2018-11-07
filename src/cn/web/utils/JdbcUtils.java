@@ -3,6 +3,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import java.sql.Statement;
+
 public class JdbcUtils {
 	static {
 		System.out.println("Static..........");
@@ -16,11 +18,30 @@ public class JdbcUtils {
 	public static Connection getConnection(){
 		
 		try {
+			System.out.println("connection已打开");
 			return DriverManager.getConnection("jdbc:mysql://localhost:3306/demo", "root", "root");
 		} catch (SQLException e) {	
 			throw new RuntimeException(e);
 		}
 		
+	}
+	public static void close(Connection connection,Statement pre){
+		try {
+			if(pre != null && !pre.isClosed()) {
+				pre.close();
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				if(connection != null && !connection.isClosed()) {
+				connection.close();	
+				System.out.println("connection已关闭");
+				}
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
 	public static void main(String[] args){
 		
